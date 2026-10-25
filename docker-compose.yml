@@ -31,5 +31,16 @@ services:
     ports:
       - "127.0.0.1:8000:8000"
 
+  simulator:
+    build: ./simulator
+    restart: unless-stopped
+    environment:
+      BACKEND_URL: http://backend:8000/api/v1
+      SIMULATOR_INTERVAL: ${SIMULATOR_INTERVAL:-10}
+      SIMULATOR_CHANNELS: ${SIMULATOR_CHANNELS}
+      SIMULATOR_SKUS: ${SIMULATOR_SKUS}
+    depends_on:
+      - backend
+
 volumes:
   pgdata:
