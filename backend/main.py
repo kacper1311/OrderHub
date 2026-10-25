@@ -15,7 +15,7 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(title="OrderHub API", lifespan=lifespan)
 app.include_router(auth.router)
 
 

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
 from database import get_session
+from dependencies import get_current_user
 from models import User
 from schemas.auth import LoginRequest, LoginResponse
 from schemas.user import UserRead
@@ -20,3 +21,8 @@ def login(data: LoginRequest, session: Session = Depends(get_session)):
 
     token = create_access_token(user.id, user.role)
     return LoginResponse(access_token=token, user=UserRead.model_validate(user))
+
+
+@router.get("/me", response_model=UserRead)
+def me(user: User = Depends(get_current_user)):
+    return user
