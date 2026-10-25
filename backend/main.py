@@ -4,6 +4,7 @@ from sqlmodel import SQLModel
 
 import models
 from database import engine
+from routers import auth
 from services.admin import create_admin_if_missing
 
 
@@ -15,6 +16,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+app.include_router(auth.router)
 
 
 @app.get("/api/v1/health")
