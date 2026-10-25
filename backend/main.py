@@ -4,7 +4,7 @@ from sqlmodel import SQLModel
 
 import models
 from database import engine
-from routers import auth, users
+from routers import auth, products, stock, users
 from services.admin import create_admin_if_missing
 
 
@@ -18,6 +18,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="OrderHub API", lifespan=lifespan)
 app.include_router(auth.router)
 app.include_router(users.router)
+app.include_router(products.router)
+app.include_router(stock.router)
 
 
 @app.get("/api/v1/health")
